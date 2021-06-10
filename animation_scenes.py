@@ -11,9 +11,9 @@ from copy import deepcopy
 import pdb
 
 class Logo(Scene):
-	def construct(self):
-		# We first parse the coordinates
-        coordinates_file = 'svg/logo_coordinates.tsv'
+    def construct(self):
+        # We first parse the coordinates
+        coordinates_file = '/presentation/svg/logo_coordinates.tsv'
 
         autometa_circles = list()
 
