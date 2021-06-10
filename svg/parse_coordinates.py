@@ -39,11 +39,43 @@ with open(input_file, 'r') as svg:
             radius = float(line_list[4][3:-3])
 
             manim_x = (x_coord/60.0875) - 7
-            manim_y = ((y_coord - 35.1)/60.0875) - 4
+            manim_y = (((y_coord - 35.1)/60.0875) - 4)*(-1)
             manim_color = colors[circle_class]
             manim_radius = radius/60.0875
 
             output_string = '\t'.join([str(manim_x), str(manim_y), str(manim_radius), manim_color]) + '\n'
 
             output.write(output_string)
+        elif len(line) > 14 and line[:14] == '<ellipse class':
+            line_list = line.rstrip().split(" ")
+            x_coord = float(line_list[2][4:-1])
+            y_coord = float(line_list[3][4:-1])
+            circle_class = line_list[1][7:-1]
+            radius = float(line_list[4][4:-1])
+
+            manim_x = (x_coord/60.0875) - 7
+            manim_y = (((y_coord - 35.1)/60.0875) - 4)*(-1)
+            manim_color = colors[circle_class]
+            manim_radius = radius/60.0875
+
+            output_string = '\t'.join([str(manim_x), str(manim_y), str(manim_radius), manim_color]) + '\n'
+
+            output.write(output_string)
+        elif len(line) > 18 and line[:18] == '<ellipse transform':
+            line_list = line.rstrip().split(" ")
+            x_coord = float(line_list[8][4:-1])
+            y_coord = float(line_list[9][4:-1])
+            circle_class = line_list[7][7:-1]
+            radius = float(line_list[10][4:-1])
+
+            manim_x = (x_coord/60.0875) - 7
+            manim_y = (((y_coord - 35.1)/60.0875) - 4)*(-1)
+            manim_color = colors[circle_class]
+            manim_radius = radius/60.0875
+
+            output_string = '\t'.join([str(manim_x), str(manim_y), str(manim_radius), manim_color]) + '\n'
+
+            output.write(output_string)
+        else:
+            print(line)
 
