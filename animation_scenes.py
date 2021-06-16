@@ -16,7 +16,7 @@ class Logo(Scene):
         # We first parse the coordinates for where the circles are going to end up
         coordinates_file = '/presentation/svg/logo_coordinates.tsv'
 
-        autometa_circles = list()
+        autometa_circles = [ [] for i in range(8) ]
 
         with open(coordinates_file, 'r') as coordinates:
             for line in coordinates:
@@ -27,45 +27,51 @@ class Logo(Scene):
                 color = line_list[3]
 
                 current_circle = Dot(np.array([x_coord, y_coord, 0]), color = color, radius = radius)
-                autometa_circles.append(current_circle)
+
+                if x_coord < -4.67:
+                    autometa_circles[0].append(current_circle)
+                elif x_coord < -3.01:
+                    autometa_circles[1].append(current_circle)
+                elif x_coord < -1.84:
+                    autometa_circles[2].append(current_circle)
+                elif x_coord < -0.09:
+                    autometa_circles[3].append(current_circle)
+                elif x_coord < 2.32:
+                    autometa_circles[4].append(current_circle)
+                elif x_coord < 3.98:
+                    autometa_circles[5].append(current_circle)
+                elif x_coord < 5.15:
+                    autometa_circles[6].append(current_circle)
+                else:
+                    autometa_circles[7].append(current_circle)
 
         # Now we come up with random coordinates for where the circles begin
         # We initialize within a bounding box of X -6.6 to 6.6 and Y -3.6 to 3.6
-        initial_circles = list()
+        initial_circles = [ [] for i in range(8) ]
 
-        for i in range(len(autometa_circles)):
-            initial_circle = autometa_circles[i].deepcopy().move_to(np.array([random.uniform(-6.6,6.6), random.uniform(-3.6,3.6), 0]))
-            initial_circles.append(initial_circle)
-
-        # We make an enlarged set so that we start with a zoomed in version
-        enlarged_circles = list()
-        for i in range(len(initial_circles)):
-            old_circle_center = initial_circles[i].get_center()
-            new_x = old_circle_center[0] * 5
-            new_y = old_circle_center[1] * 5
-
-            old_radius = initial_circles[i].get_width() / 2
-            new_radius = old_radius * 5
-
-            color = initial_circles[i].get_color()
-
-            new_circle = Dot(np.array([new_x, new_y, 0]), color = color, radius = new_radius)
-            enlarged_circles.append(new_circle)
+        for i in range(8):
+            for j in range(len(autometa_circles[i])):
+                initial_circle = autometa_circles[i][j].deepcopy().move_to(np.array([random.uniform(-6.6,6.6), random.uniform(-3.6,3.6), 0])).set_color(GREY)
+                initial_circles[i].append(initial_circle)
 
         # Now we make the transforms
-        fade_in_animations = list()
-        zoom_out_transforms = list()
-        autometa_transforms = list()
+        fade_in_animations = list() # Simple list of each object FadeIn
+        autometa_transforms = [ [] for i in range(8) ] # List of lists, each list contains transformation of dots to form a single letter
 
-        for i in range(len(enlarged_circles)):
-            fade_in_animations.append(FadeIn(enlarged_circles[i]))
-            zoom_out_transforms.append(Transform(enlarged_circles[i], initial_circles[i]))
-            autometa_transforms.append(Transform(enlarged_circles[i], autometa_circles[i]))
+        for i in range(8):
+            for j in range(len(initial_circles[i])):
+                fade_in_animations.append(FadeIn(initial_circles[i][j]))
+
+        for i in range(8):
+            for j in range(len(initial_circles[i])):
+                autometa_transforms[i].append(Transform(initial_circles[i][j], autometa_circles[i][j]))
+
+        autometa_animationgroups = list()
+
+        for i in range(8):
+            autometa_animationgroups.append(AnimationGroup(*autometa_transforms[i], lag_ratio = 0))
             
-
         self.play(*fade_in_animations)
         #self.wait()
-        self.play(*zoom_out_transforms)
-        #self.wait()
-        self.play(*autometa_transforms)
+        self.play(AnimationGroup(*autometa_animationgroups, lag_ratio = 0.2))
         self.wait(5)
