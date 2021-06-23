@@ -26,7 +26,7 @@ output = open(output_file, 'w')
 
 # So to go from SVG to Manim:
 # For X, (X/60.0875) - 7
-# For Y, (Y - 35.1)/60.0875 - 4 
+# For Y, ((Y - 35.1)/60.0875 - 4)*-1
 # For radius, R/60.0875
 
 with open(input_file, 'r') as svg:
