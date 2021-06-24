@@ -10,7 +10,7 @@ How Autometa Works
 2. Coverage calculation
 ```
 
-This is the first video in a series that explores how Autometa works to separate genomes from metagenomes, a process known as "binning". This time, I will explain the different ways that coverage can be calculated, and how Autometa uses this information.
+This is the second video in a series that explores how Autometa works to separate genomes from metagenomes, a process known as "binning". This time, I will explain the different ways that coverage can be calculated, and how Autometa uses this information.
 
 ```
 Stuff on the screen fades out
