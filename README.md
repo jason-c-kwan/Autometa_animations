@@ -1,7 +1,7 @@
 # Autometa Animations
 
-This repository contains the source code for the [https://github.com/3b1b/manim](manim) scenes I used to make the animations used in 
-the [https://autometa.readthedocs.org](Autometa documentation) and the [https://www.youtube.com/channel/UC6gKlYZ89fct4cJyj5sQBSg](Kwan lab YouTube channel).
+This repository contains the source code for the [manim](https://github.com/3b1b/manim) scenes I used to make the animations used in 
+the [Autometa documentation](https://autometa.readthedocs.org) and the [Kwan lab YouTube channel](https://www.youtube.com/channel/UC6gKlYZ89fct4cJyj5sQBSg).
 
 ## Rendering the animations
 
